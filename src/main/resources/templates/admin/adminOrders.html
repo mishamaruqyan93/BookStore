@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin orders</title>
+</head>
+<body>
+<a th:if="${currentUser == null}" href="/login">Login</a>
+<a th:if="${currentUser != null}" href="/logout">Logout</a>
+<span th:if="${currentUser != null}" th:text="Welcome + ' ' + ${currentUser.name}"></span>
+<a th:if="${currentUser == null}" href="/register">Register</a> <br>
+<a href="/">Home</a>
+<a th:if="${currentUser != null && currentUser.userRole.name == 'ADMIN'}" href="/admin">Admin Panel</a>
+
+<table border="1">
+    <tr>
+        <th style="color: red">Order Date</th>
+        <th style="color: red">Amount</th>
+        <th style="color: red">Book title</th>
+        <th style="color: red">User name</th>
+        <th style="color: red">User phone number</th>
+    </tr>
+    <tr th:each="order: ${orders}">
+        <td th:text="${order.getOrderDateTime()}"></td>
+        <td th:text="${order.getAmount()}"></td>
+        <td th:text="${order.book.getTitle()}"></td>
+        <td th:text="${order.user.getName()}"></td>
+        <td th:text="${order.user.getPhoneNumber()}"></td>
+    </tr>
+</table>
+</body>
+</html>

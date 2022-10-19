@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<a th:if="${currentUser == null}" href="/login">Login</a>
+<a th:if="${currentUser != null}" href="/logout">Logout</a>
+<span th:if="${currentUser != null}" th:text="Welcome + ' ' + ${currentUser.name}"></span>
+<a th:if="${currentUser == null}" href="/register">Register</a> <br>
+<a style="color: chocolate" href="/">Home</a><br>
+<a th:if="${currentUser != null && currentUser.userRole.name == 'ADMIN'}" href="/admin">Admin Panel</a><br>
+<a href="/admin/allOrders">All Orders</a><br>
+<h3 style="color: chocolate">Books:</h3>
+<a href="/admin/book/add">Add new Book</a> <br>
+
+<table border="1">
+    <tr>
+        <th style="color: red">id</th>
+        <th style="color: red">title</th>
+        <th style="color: red">price</th>
+        <th style="color: red">action</th>
+    </tr>
+    <tr th:each="book: ${books}">
+        <td th:text="${book.id}"></td>
+        <td> <a th:href="@{'/book/' + ${book.id}}" th:text="${book.title}"></a></td>
+        <td th:text="${book.price}"></td>
+        <td>
+            <a th:href="@{'/admin/book/remove/' + ${book.id}}">Remove</a>
+            <a th:href="@{/admin/book/edit(bookId=${book.id})}">Edit</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
